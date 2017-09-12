@@ -1,6 +1,5 @@
-# AI
-data/
-output/
+# TensorFlow
+events.out.tfevents.*
 
 # Python
 *.pyc

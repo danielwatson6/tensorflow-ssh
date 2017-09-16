@@ -112,12 +112,14 @@ while True:
   valid_batch = get_batch(VALID_DATA)
   _, train_ppx, train_met = sess.run(
     [train_op, perplexity, metrics], feed_dict=make_fd(train_batch))
-  valid_ppx, valid_out, valid_met = sess.run(
-    [perplexity, output, metrics], feed_dict=make_fd(valid_batch))
-  print("Step {0} (train_ppx={1}, valid_ppx={2})".format(
-    step, train_ppx, valid_ppx))
-  print("Sample validation output:")
-  print(''.join([ID_TO_CHAR[i] for i in valid_out[0]]))
-  train_writer.add_summary(train_met, step)
-  valid_writer.add_summary(valid_met, step)
+  
+  if step % 100 == 0:
+    valid_ppx, valid_out, valid_met = sess.run(
+      [perplexity, output, metrics], feed_dict=make_fd(valid_batch))
+    print("Step {0} (train_ppx={1}, valid_ppx={2})".format(
+      step, train_ppx, valid_ppx))
+    print("Sample validation output:")
+    print(''.join([ID_TO_CHAR[i] for i in valid_out[0]]))
+    train_writer.add_summary(train_met, step)
+    valid_writer.add_summary(valid_met, step)
 
